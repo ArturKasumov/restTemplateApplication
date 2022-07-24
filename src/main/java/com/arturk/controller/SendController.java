@@ -2,9 +2,7 @@ package com.arturk.controller;
 
 import com.arturk.domain.Person;
 import org.springframework.http.*;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -44,10 +42,10 @@ public class SendController {
     }
 
     @RequestMapping(value = "/createPerson", method = RequestMethod.POST)
-    public Person createPerson(){
+    public Person createPerson(@RequestParam String name, @RequestParam String age){
         Map<String, String> variables = new HashMap<>();
-        variables.put("name", "ArturTest");
-        variables.put("age", "1");
+        variables.put("name", name);
+        variables.put("age", age);
         ResponseEntity<Person> responseEntity = restTemplate.getForEntity("http://localhost:8080/listenPerson?name={name}&age={age}", Person.class, variables);
         return responseEntity.getBody();
     }
